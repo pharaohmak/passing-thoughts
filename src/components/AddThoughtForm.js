@@ -1,27 +1,28 @@
-import React, {useState} from 'react';
-import { generateId, getNewExpirationTime } from './utilities';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { generateId, getNewExpirationTime } from '../utilities';
 
-export function AddThoughtForm(props) {
+export function AddThoughtForm({ addThought }) {
   const [text, setText] = useState('');
 
-  const handleTextChange = (event)=> {
+  const handleTextChange = (event) => {
     setText(event.target.value);
-  }
+  };
 
-  const handleSubmit = (event)=> {
+  const handleSubmit = (event) => {
     event.preventDefault();
 
     const thought = {
       id: generateId(),
       text: text,
-      expiresAt: getNewExpirationTime()
-    }
+      expiresAt: getNewExpirationTime(),
+    };
 
-    if(text.length > 0){
-      props.addThought(thought);
+    if (text.length > 0) {
+      addThought(thought);
       setText('');
     }
-  }
+  };
 
   return (
     <form className="AddThoughtForm" onSubmit={handleSubmit}>
@@ -36,3 +37,7 @@ export function AddThoughtForm(props) {
     </form>
   );
 }
+
+AddThoughtForm.propTypes = {
+  addThought: PropTypes.func.isRequired,
+};
